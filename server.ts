@@ -3,7 +3,7 @@ import { staticPlugin } from "@elysiajs/static";
 import { renderToReadableStream } from "react-dom/server.browser";
 import { swagger } from "@elysiajs/swagger";
 import { ComponentType, createElement } from "react";
-import HtmlHome from "./src/html/indexes/HtmlHomeIndex.html" with { type: "text" };
+import HtmlHome from "./src/html/indexes/HtmlHomeIndex.html";
 import { build } from "./src/build";
 import { ReactHome } from "./src/react/pages/ReactHome";
 const host = Bun.env.HOST || "localhost";

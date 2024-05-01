@@ -1,4 +1,4 @@
-import { readdir, writeFile, rm, mkdir  } from "node:fs/promises";
+import { readdir, writeFile, rm, mkdir } from "node:fs/promises";
 import { extname, join } from "node:path";
 import shell from "shelljs";
 
@@ -16,9 +16,6 @@ export async function build() {
 
 	const reactFiles = await readdir(reactIndexDir);
 	const javascriptFiles = await readdir(javascriptDir);
-	const assetFiles = await readdir(assetsDir);
-	
-    const assetPaths = assetFiles.map((file) => join(assetsDir, file));
 
 	const reactEntryPoints = reactFiles.filter(
 		(file) => extname(file) === ".tsx"
@@ -41,7 +38,7 @@ export async function build() {
 }
 
 async function copyAssetsToBuildDir() {
-    shell.cp('-R', assetsDir, buildDir);
+	shell.cp("-R", assetsDir, buildDir);
 }
 
 async function generateReactIndexFiles() {
