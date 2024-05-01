@@ -1,0 +1,49 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f0f0f0;
+}
+
+header {
+	background-color: #333;
+	color: white;
+	padding: 10px 0;
+	text-align: center;
+}
+
+main {
+	padding: 20px;
+}
+
+main p {
+	margin-bottom: 10px;
+}
+
+#counter-button {
+	display: inline-block;
+	background-color: #008cba;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+
+#counter {
+	font-size: 24px;
+	color: #333;
+}
+
+footer {
+	background-color: #333;
+	color: white;
+	text-align: center;
+	padding: 10px 0;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}

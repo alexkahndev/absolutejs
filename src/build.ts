@@ -1,5 +1,6 @@
 import { readdir, writeFile, rm, mkdir  } from "node:fs/promises";
 import { extname, join } from "node:path";
+import shell from "shelljs";
 
 const buildDir = "./build";
 const assetsDir = "./src/assets";
@@ -40,7 +41,7 @@ export async function build() {
 }
 
 async function copyAssetsToBuildDir() {
-	
+    shell.cp('-R', assetsDir, buildDir);
 }
 
 async function generateReactIndexFiles() {

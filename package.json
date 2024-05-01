@@ -17,13 +17,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "shelljs": "^0.8.5",
     "vue": "^3.4.26"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
-    "@types/vue": "^2.0.0",
     "@types/react-dom": "^18.2.7",
     "@types/react-helmet": "^6.1.11",
+    "@types/shelljs": "^0.8.15",
+    "@types/vue": "^2.0.0",
     "bun-types": "^1.0.26",
     "drizzle-kit": "^0.20.14"
   },
