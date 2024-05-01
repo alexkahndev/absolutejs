@@ -1,54 +1,70 @@
-import { readdir, writeFile, rmdir, mkdir } from "node:fs/promises";
+import { readdir, writeFile, rm, mkdir  } from "node:fs/promises";
 import { extname, join } from "node:path";
 
+const buildDir = "./build";
+const assetsDir = "./src/assets";
+
+const reactIndexDir = "./src/react/indexes";
+const javascriptDir = "./src/html/scripts";
+
+const reactPagesDir = "./src/react/pages";
+
 export async function build() {
-  const buildDir = "./build";
+	await rm(buildDir, { recursive: true, force: true });
+	await generateReactIndexFiles();
 
-  // Delete the build directory and recreate it
-  await rmdir(buildDir, { recursive: true });
-  await mkdir(buildDir);
+	const reactFiles = await readdir(reactIndexDir);
+	const javascriptFiles = await readdir(javascriptDir);
+	const assetFiles = await readdir(assetsDir);
+	
+    const assetPaths = assetFiles.map((file) => join(assetsDir, file));
 
-  // Generate index files
-  await generateIndexFiles();
+	const reactEntryPoints = reactFiles.filter(
+		(file) => extname(file) === ".tsx"
+	);
+	const javascriptEntryPoints = javascriptFiles.filter(
+		(file) => extname(file) === ".js"
+	);
 
-  const entryDir = "./src/indexes";
-  const files = await readdir(entryDir);
-  const entrypoints = files.filter((file) => extname(file) === ".tsx");
-  const entryPaths = entrypoints.map((file) => join(entryDir, file));
+	const entryPaths = reactEntryPoints
+		.map((file) => join(reactIndexDir, file))
+		.concat(javascriptEntryPoints.map((file) => join(javascriptDir, file)));
 
-  await Bun.build({
-    entrypoints: entryPaths,
-    outdir: "./build",
-    minify: true
-  });
+	await Bun.build({
+		entrypoints: entryPaths,
+		outdir: "./build",
+		minify: true
+	});
+
+	await copyAssetsToBuildDir();
 }
 
-async function generateIndexFiles() {
-  const pagesDir = "./src/pages";
-  const indexDir = "./src/indexes";
+async function copyAssetsToBuildDir() {
+	
+}
 
-  // Delete the indexes directory and recreate it
-  await rmdir(indexDir, { recursive: true });
-  await mkdir(indexDir);
+async function generateReactIndexFiles() {
+	await rm(reactIndexDir, { recursive: true, force: true });
+	await mkdir(reactIndexDir);
 
-  try {
-    const files = await readdir(pagesDir);
+	try {
+		const files = await readdir(reactPagesDir);
 
-    for (const file of files) {
-      const componentName = file.split(".")[0];
+		for (const file of files) {
+			const componentName = file.split(".")[0];
 
-      const content = [
-        'import { hydrateRoot } from "react-dom/client";',
-        `import ${componentName} from "../pages/${componentName}";`,
-        `hydrateRoot(document, <${componentName} />);`
-      ].join('\n');
+			const content = [
+				'import { hydrateRoot } from "react-dom/client";',
+				`import { ${componentName} } from "../pages/${componentName}";\n`,
+				`hydrateRoot(document, <${componentName} />);`
+			].join("\n");
 
-      await writeFile(
-        join(indexDir, `${componentName}Index.tsx`),
-        content
-      );
-    }
-  } catch (error) {
-    console.error(`Error generating index files: ${error}`);
-  }
+			await writeFile(
+				join(reactIndexDir, `${componentName}Index.tsx`),
+				content
+			);
+		}
+	} catch (error) {
+		console.error(`Error generating index files: ${error}`);
+	}
 }

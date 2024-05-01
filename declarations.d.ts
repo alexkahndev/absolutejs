@@ -8,4 +8,13 @@ declare module "*.mp4" {
 	export default content;
 }
 
-// Add similar declarations for other file types as needed
+declare module "*.html" {
+	const content: string;
+	export default content;
+}
+
+declare module "*.vue" {
+	import { defineComponent } from "vue";
+	const component: ReturnType<typeof defineComponent>;
+	export default component;
+}

@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "types": ["bun-types"],
     "lib": ["DOM", "DOM.Iterable", "ESNext"]
-  }
+  },
 }

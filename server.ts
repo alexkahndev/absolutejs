@@ -3,15 +3,15 @@ import { staticPlugin } from "@elysiajs/static";
 import { renderToReadableStream } from "react-dom/server.browser";
 import { swagger } from "@elysiajs/swagger";
 import { ComponentType, createElement } from "react";
-import Home from "./pages/Home";
-import { build } from "./build";
-
+import HtmlHome from "./src/html/indexes/HtmlHomeIndex.html" with { type: "text" };
+import { build } from "./src/build";
+import { ReactHome } from "./src/react/pages/ReactHome";
 const host = Bun.env.HOST || "localhost";
 const port = Bun.env.PORT || 3000;
 
 await build();
 
-async function handleRequest(pageComponent: ComponentType, index: string) {
+async function handleReactRequest(pageComponent: ComponentType, index: string) {
 	const page = createElement(pageComponent);
 	const stream = await renderToReadableStream(page, {
 		bootstrapScripts: [index]
@@ -22,6 +22,11 @@ async function handleRequest(pageComponent: ComponentType, index: string) {
 	});
 }
 
+async function handleHtmlRequest() {
+	return new Response(HtmlHome, {
+		headers: { "Content-Type": "text/html" }
+	});
+}
 export const server = new Elysia()
 
 	.use(
@@ -31,7 +36,8 @@ export const server = new Elysia()
 		})
 	)
 	.use(swagger())
-	.get("/", () => handleRequest(Home, "/HomeIndex.js"))
+	.get("/", () => handleHtmlRequest())
+	.get("/react", () => handleReactRequest(ReactHome, "/ReactHomeIndex.js"))
 	.listen(port, () => {
 		console.log(`server started on http://${host}:${port}`);
 	})

@@ -1,4 +1,4 @@
-const Home = () => {
+export const ReactHome = () => {
 	return (
 		<html>
 			<head>
@@ -31,5 +31,3 @@ const Home = () => {
 		</html>
 	);
 };
-
-export default Home;
