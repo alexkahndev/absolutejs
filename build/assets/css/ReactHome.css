@@ -10,17 +10,13 @@ header {
     color: #61dafb;
 }
 
-#logo {
-    height: 100px;
-}
-
 main {
     margin: 20px;
     text-align: center;
     color: #20232a;
 }
 
-#counter-button {
+button {
     background-color: #61dafb;
     border: none;
     color: white;
@@ -55,8 +51,5 @@ footer {
     background-color: #20232a;
     padding: 20px;
     text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
     color: #61dafb;
 }
