@@ -29,6 +29,10 @@ async function handleHtmlRequest(pageHtml: string ) {
 	});
 }
 
+async function handleSvelteRequest(pageComponent: any) {
+	
+}
+
 export const server = new Elysia()
 
 	.use(
