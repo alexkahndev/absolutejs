@@ -4,13 +4,15 @@ import { renderToReadableStream } from "react-dom/server.browser";
 import { swagger } from "@elysiajs/swagger";
 import { ComponentType, createElement } from "react";
 import { build } from "./build";
-import { ReactHome } from "./src/react/pages/ReactHome";
-import HtmlHome from "./src/html/indexes/HtmlHomeIndex.html" with { type: "text" };
+import { serverTiming } from "@elysiajs/server-timing";
+import { ReactHome } from "./react/pages/ReactHome";
 
 const host = Bun.env.HOST || "localhost";
 const port = Bun.env.PORT || 3000;
 
 await build();
+
+let counter = 0;
 
 async function handleReactRequest(pageComponent: ComponentType, index: string) {
 	const page = createElement(pageComponent);
@@ -23,14 +25,7 @@ async function handleReactRequest(pageComponent: ComponentType, index: string) {
 	});
 }
 
-async function handleHtmlRequest(pageHtml: string ) {
-	return new Response(pageHtml, {
-		headers: { "Content-Type": "text/html" }
-	});
-}
-
-async function handleSvelteRequest(pageComponent: any) {
-	
+async function handleSvelteRequest(pageName: string) {
 }
 
 export const server = new Elysia()
@@ -41,9 +36,20 @@ export const server = new Elysia()
 			prefix: ""
 		})
 	)
+	.use(serverTiming())
 	.use(swagger())
-	.get("/", () => handleHtmlRequest(HtmlHome))
-	.get("/react", () => handleReactRequest(ReactHome, "/react/indexes/ReactHomeIndex.js"))
+	.get("/", () => Bun.file("./build/html/indexes/HtmlHomeIndex.html"))
+	.get("/react", () =>
+		handleReactRequest(ReactHome, "./react/indexes/ReactHomeIndex.js")
+	)
+	.get("/htmx", () => Bun.file("./build/htmx/HtmxHome.html"))
+	.get("/htmx/increment", () => {
+        counter++; // Increment the counter
+        return new Response(counter.toString(), {
+            headers: { "Content-Type": "text/plain" }
+        });
+    })
+	.get("/svelte", () => handleSvelteRequest("SvelteHome"))
 	.listen(port, () => {
 		console.log(`server started on http://${host}:${port}`);
 	})

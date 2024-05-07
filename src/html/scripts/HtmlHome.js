@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	});
 
 	const links = document.querySelectorAll("#links a");
-	links.forEach(link => {
+	links.forEach((link) => {
 		link.addEventListener("mouseover", () => {
 			link.style.transform = "scale(1.2)";
 		});

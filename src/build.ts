@@ -1,12 +1,15 @@
 import { readdir, writeFile, rm, mkdir } from "node:fs/promises";
 import { extname, join } from "node:path";
 import shell from "shelljs";
+import { rollup } from "rollup";
+import rollupConfig from "../rollup.config";
 
 const buildDir = "./build";
 const assetsDir = "./src/assets";
 
 const reactIndexDir = "./src/react/indexes";
 const javascriptDir = "./src/html/scripts";
+const sveltePagesDir = "./src/svelte/pages";
 
 const reactPagesDir = "./src/react/pages";
 
@@ -28,17 +31,42 @@ export async function build() {
 		.map((file) => join(reactIndexDir, file))
 		.concat(javascriptEntryPoints.map((file) => join(javascriptDir, file)));
 
-	await Bun.build({
+	const { logs, success } = await Bun.build({
 		entrypoints: entryPaths,
 		outdir: "./build",
 		minify: true
 	});
 
+	if (!success) {
+		throw new AggregateError(logs);
+	}
+
+	// Build Svelte components
+	// const bundle = await rollup(rollupConfig);
+
+	// await bundle.write({
+	// 	dir: "build/svelte",
+	// 	format: "es"
+	// });
+
 	await copyAssetsToBuildDir();
 }
 
 async function copyAssetsToBuildDir() {
+	// Copy assets
 	shell.cp("-R", assetsDir, buildDir);
+
+	// Create build/html/indexes directory if it doesn't exist
+	shell.mkdir("-p", `${buildDir}/html/indexes`);
+
+	// Create htmx
+	shell.mkdir("-p", `${buildDir}/htmx`);
+
+	// Copy HTML files
+	shell.cp("-R", "./src/html/indexes/*", `${buildDir}/html/indexes`);
+
+	// Copy htmx files
+	shell.cp("-R", "./src/htmx/*", `${buildDir}/htmx/`);
 }
 
 async function generateReactIndexFiles() {

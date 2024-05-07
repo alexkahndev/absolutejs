@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export const ReactHome = () => {
 	const [count, setCount] = useState(0);
@@ -10,7 +10,10 @@ export const ReactHome = () => {
 				<meta charSet="utf-8" />
 				<title>React Home</title>
 				<meta name="description" content="Welcome to AbsoluteJS" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
 				<link rel="stylesheet" href="/assets/css/ReactHome.css" />
 				<link rel="icon" href="/assets/ico/favicon.ico" />
 			</head>
@@ -21,12 +24,15 @@ export const ReactHome = () => {
 					</header>
 					<section>
 						<p>
-							Welcome to the React home page. This page was built using React.
+							Welcome to the React home page. This page was built
+							using React.
 						</p>
 						<p>Counter: {count}</p>
-						<button onClick={() => setCount(count + 1)}>Increment</button>
+						<button onClick={() => setCount(count + 1)}>
+							Increment
+						</button>
 						<div id="links">
-							<a href="/">Home</a>
+							<a href="/">Html</a>
 							<a href="/vue">Vue</a>
 						</div>
 					</section>
