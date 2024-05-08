@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>HTMX Counter Example</title>
+  <link rel="icon" href="/assets/ico/favicon.ico" type="image/x-icon">
   <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
     }
-    #counter {
+    #counterDisplay {
       font-size: 2em;
       color: blue;
     }
@@ -18,14 +19,15 @@
   </style>
 </head>
 <body>
-  <div id="counter" hx-get="/htmx/increment" hx-trigger="click" hx-swap="outerHTML">
+  <div id="counterDisplay">
     0
   </div>
+  <button id="incrementButton" hx-get="/htmx/increment" hx-trigger="click" hx-swap="innerHTML" hx-target="#counterDisplay">Increment</button>
 
-  <a href="/" hx-get="/" hx-swap="outerHTML">Page 1</a>
-  <a href="/react" hx-get="/react" hx-swap="outerHTML">Page 2</a>
-  <a href="/page3" hx-get="/page3" hx-swap="outerHTML">Page 3</a>
-  <a href="/page4" hx-get="/page4" hx-swap="outerHTML">Page 4</a>
-  <a href="/page5" hx-get="/page5" hx-swap="outerHTML">Page 5</a>
+  <a href="/">Page 1</a>
+  <a href="/react">Page 2</a>
+  <a href="/page3">Page 3</a>
+  <a href="/page4">Page 4</a>
+  <a href="/page5">Page 5</a>
 </body>
 </html>

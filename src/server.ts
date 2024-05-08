@@ -44,7 +44,7 @@ export const server = new Elysia()
 	)
 	.get("/htmx", () => Bun.file("./build/htmx/HtmxHome.html"))
 	.get("/htmx/increment", () => {
-        counter++; // Increment the counter
+        counter++;
         return new Response(counter.toString(), {
             headers: { "Content-Type": "text/plain" }
         });
