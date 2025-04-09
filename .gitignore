@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+**/node_modules/
 /.pnp
 .pnp.js
 
@@ -42,3 +43,4 @@ package-lock.json
 
 #local build files
 **/build/src/
+/build
