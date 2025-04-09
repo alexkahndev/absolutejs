@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	const hours = date.getHours();
 
 	if (hours < 12) {
-		greeting.textContent = "Good Morning, welcome to AbsoluteJS!";
+		greeting.textContent = "Good Morning, welcome to AbsoluteJS !";
 	} else if (hours < 18) {
-		greeting.textContent = "Good Afternoon, welcome to AbsoluteJS!";
+		greeting.textContent = "Good Afternoon, welcome to AbsoluteJS !";
 	} else {
-		greeting.textContent = "Good Evening, welcome to AbsoluteJS!";
+		greeting.textContent = "Good Evening, welcome to AbsoluteJS !";
 	}
 
 	const button = document.getElementById("counter-button");

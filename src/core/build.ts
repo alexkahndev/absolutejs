@@ -7,6 +7,7 @@ import {
 	MILLISECONDS_IN_A_SECOND,
 	TIME_PRECISION
 } from "../constants";
+import {  updateScriptTags } from "../utils/updateScriptTags";
 
 const projectRoot = join(import.meta.dir, "..", "..");
 const buildDir = join(projectRoot, "example/build");
@@ -15,6 +16,7 @@ const reactIndexDir = join(projectRoot, "example/react/indexes");
 const javascriptDir = join(projectRoot, "example/javascript");
 const typeScriptDir = join(projectRoot, "example/typescript");
 const reactPagesDir = join(projectRoot, "example/react/pages");
+const htmlDir = join(projectRoot, "example/html");
 
 export const build = async () => {
 	const start = performance.now();
@@ -96,6 +98,8 @@ export const build = async () => {
 		return acc;
 	}, {});
 
+	await updateScriptTags(manifest, htmlDir);
+
 	const end = performance.now();
 	const durationMs = end - start;
 	let duration;
@@ -107,6 +111,9 @@ export const build = async () => {
 		duration = `${(durationMs / MILLISECONDS_IN_A_MINUTE).toFixed(TIME_PRECISION)}m`;
 	}
 	console.log(`Build completed in ${duration}`);
+
+	console.log("Outputs:", outputs);
+	console.log("Manifest:", manifest);
 
 	return manifest;
 };

@@ -15,3 +15,5 @@ export const handleReactPageRequest = async (
 		headers: { "Content-Type": "text/html" }
 	});
 };
+
+export const handleHTMLPageRequest = (html: string) => Bun.file(html);

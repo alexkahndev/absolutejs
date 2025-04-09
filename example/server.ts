@@ -3,7 +3,7 @@ import { staticPlugin } from "@elysiajs/static";
 import { swagger } from "@elysiajs/swagger";
 import { serverTiming } from "@elysiajs/server-timing";
 import { ReactHome } from "./react/pages/ReactHome";
-import { handleReactPageRequest } from "../src/core/pageHandlers";
+import { handleHTMLPageRequest, handleReactPageRequest } from "../src/core/pageHandlers";
 import { build } from "../src/core/build";
 
 const host = Bun.env.HOST || "localhost";
@@ -23,7 +23,7 @@ export const server = new Elysia()
 	)
 	.use(serverTiming())
 	.use(swagger())
-	.get("/", () => Bun.file("./example/build/html/HtmlHomeIndex.html"))
+	.get("/", () => handleHTMLPageRequest("./example/build/html/HtmlHomeIndex.html"))
 	.get("/react", () =>
 		handleReactPageRequest(ReactHome, manifest["ReactHomeIndex"])
 	)
