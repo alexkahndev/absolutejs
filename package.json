@@ -1,12 +1,13 @@
 {
-  "name": "absolutejs",
-  "version": "0.1.0",
+  "name": "@absolutejs/absolute",
+  "version": "0.1.2",
   "description": "A fullstack meta-framework for building web applications with TypeScript",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/alexkahndev/absolutejs.git"
 	},
-	"main": "dist/index.js",
+	"main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "license": "CC BY-NC 4.0",
 	"author": "Alex Kahn",
   "scripts": {

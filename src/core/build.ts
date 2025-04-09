@@ -7,7 +7,7 @@ import {
 	MILLISECONDS_IN_A_SECOND,
 	TIME_PRECISION
 } from "../constants";
-import {  updateScriptTags } from "../utils/updateScriptTags";
+import { updateScriptTags } from "../utils/updateScriptTags";
 
 const projectRoot = join(import.meta.dir, "..", "..");
 const buildDir = join(projectRoot, "example/build");
